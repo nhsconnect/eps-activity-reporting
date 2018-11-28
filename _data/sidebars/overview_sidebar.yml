@@ -10,7 +10,7 @@ entries:
     folderitems:
     - title: Introduction
       url: /index.html
-      output: web, pdf
+      output: web
       type: homepage
 
   - title: Develop
@@ -33,9 +33,6 @@ entries:
       output: web
     - title: API Operations Reference
       url: /api_operations_reference.html
-      output: web
-    - title: Integrating EPS Messaging
-      url: /integrating_messaging.html
       output: web
   - title: Test
     output: web

@@ -9,13 +9,13 @@ summary: "Description of user authentication and authorization by connecting sys
 
 ## User Authentication & Authorization ##
 
-Connecting systems are responsible for ensuring users are authenticated and authorized before carrying out prescription exemption checks, and including user details in calls to the service.
+Connecting systems are responsible for ensuring users are authenticated and authorized before submitting claims, and including user details in calls to the service.
 
 ### Authentication ###
-All calls to the Prescription Exemption Checking Service must be made by a user authenticated by Spine, as described by Spine External Integration Specification Part 7.
+All calls to the service must be made by a user authenticated by Spine, as described by Spine External Integration Specification Part 7.
 
 ### Authorization ###
-Systems must ensure that users carrying out prescription exemption checks have the *B0570 - Perform Pharmacy Activities* activity on their selected Spine user profile. The activity *B0572 -  Manage Pharmacy Activities* is expected to be required for reimbursement activities which will include sending EPS claim messages including prescription exemption check outcomes.
+Systems must ensure that users carrying out activity reporting claim submissions have the activity *B0572 -  Manage Pharmacy Activities* on their user role profile. This activity is expected to be required for reimbursement activities which will include sending EPS prescription claim messages.
 
 Clients must implement RBAC as defined in the National RBAC Database (NRD), and in order to map the correct activities to roles implementation must include at least the pharmacy-related roles. At version 27.2 of the NRD the following baseline roles are included in the EPS Pharmacy restriction set:
 

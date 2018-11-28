@@ -4,7 +4,7 @@ keywords: development guide api
 tags: [development]
 sidebar: overview_sidebar
 permalink: development_overview.html
-summary: "Overview for developers on how to integrate with the Prescription Exemption Checking Service"
+summary: "Overview for developers on how to integrate with the Service"
 ---
 
 ## Development Overview ##
@@ -19,7 +19,7 @@ Response to POST will be a FHIR OperationOutcome which, along with the HTTP stat
 Response to searches will be a FHIR Bundle containing the requested Claim resources, or an OperationOutcome in case of failure.
 
 ### Error Handling ###
-The Prescription Exemption Checking Service API uses standard HTTP response codes with further details included in an OperationOutcome resource.
+The API uses standard HTTP response codes with further details included in an OperationOutcome resource.
 
 ### Security ###
 
