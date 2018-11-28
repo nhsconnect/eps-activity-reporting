@@ -1,0 +1,100 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Pharmacy Activity Reporting API",
+    "version": "1.0.0",
+    "title": "PPharmacy Activity Reporting API",
+    "x-logo": {
+      "url": "images/logo.png",
+      "backgroundColor": "#FFFFFF"
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "description": "Audit and provenance details must be provided in the HTTP authorisation header as an OAuth Bearer Token. This must include the claims defined in <a href='cross_organisation_audit_and_provenance.html'>Cross organisation audit and provenance transport</a>",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "host": "dev.assured.nhsbsa.nhs.uk",
+  "basePath": "/Activity-Reporting/1.0.0",
+  "tags": [{
+    "name": "Pharmacy Activity Claims",
+    "description": "Flu Vaccination Advanced Service Claim"
+  }],
+  "schemes": ["https"],
+  "paths": {
+    "/Claim": {
+      "post": {
+        "tags": ["Pharmacy Activity Claims"],
+        "security": [{
+          "Bearer": []
+        }],
+        "summary": "Create a Flu Vaccination Advanced Service Claim",
+        "operationId": "createClaim",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "in": "body",
+          "name": "searchRequest",
+          "description": "searchRequest",
+          "required": true
+        }],
+        "responses": {
+          "201": {
+            "description": "Claim created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "422": {
+            "description": "Invalid claim"
+          },
+          "500": {
+            "description": "Unexpected error occurred"
+          },
+          "503": {
+            "description": "Service unavailable"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Pharmacy Activity Claims"],
+        "security": [{
+          "Bearer": []
+        }],
+        "summary": "Create a Flu Vaccination Advanced Service Claim",
+        "operationId": "createClaim",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "in": "body",
+          "name": "searchRequest",
+          "description": "searchRequest",
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Claim found"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Not authorised to view the claim"
+          },
+          "404": {
+            "description": "Claim not found"
+          },
+          "500": {
+            "description": "Unexpected error occurred"
+          },
+          "503": {
+            "description": "Service unavailable"
+          }
+        }
+      }
+    }
+  }
+}
