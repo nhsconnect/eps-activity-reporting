@@ -9,34 +9,22 @@ summary: "Overview for developers on how to integrate with the Prescription Exem
 
 ## Development Overview ##
 
-
 ### Requests ###
-All requests are HTTP POSTs of a json object with the following properties:
+All requests use RESTful style in creating or reading Claims. As Claim resources also reference Patient, Immunization, Practitioner and Organization resources these are included as contained resources within the Claim resource.
 
-| Property		|	Description															|	Data type		| Example												|		
-+-------------+-----------------------------------------+-------------+-------------------------------|
-|	`dob`				|	**Date of Birth** of the patient				|	Date				| 2010-01-01										|
-|	`nhsNumber`	| **NHS Number** which must be traced and verified with Spine Demographics | String	| 9434765919 |
-|	`postcode`	|	**Post Code** of patient's usual address	|	String			|	NE32JH													|
-|	`surname`|	**Family Name** from patient's usual name	|	String			|	Parker													|
-|`prescriptionId` | EPS R2 **Prescription ID** from the prescription | String | 471BC8-P83027-34B75X
 
 ### Response ###
-The json response will contain a simple object with the following properties. Note that these properties are not ordered so may appear in any order.
+Response to POST will be a FHIR OperationOutcome which, along with the HTTP statusCode will indicate success or failure, with detail as necessary.
 
-| Property	|	Description															|	Data type					| Example													|		
-+-----------+-----------------------------------------+-------------------+---------------------------------|
-|	`message`	| **Exemption description or error** which can be displayed to the user		| String	| `Exemption has been found` |
-|	`type`		|	**Exemption type** which should be returned in the reimbursement claim for EPS R2 prescriptions	|	String	|	`9005`	|
-
+Response to searches will be a FHIR Bundle containing the requested Claim resources, or an OperationOutcome in case of failure.
 
 ### Error Handling ###
-The Prescription Exemption Checking Service API uses standard HTTP response codes with further details where available provided in the `message` property.
+The Prescription Exemption Checking Service API uses standard HTTP response codes with further details included in an OperationOutcome resource.
 
 ### Security ###
 
 #### User Authentication & Authorization ####
-Systems are required to be implement Role-Based Access Control using the Spine Security Broker. The details of the user and organisation are included in an OAuth Bearer Token carried in HTTP headers.
+Client systems are required to implement Role-Based Access Control using the Spine Security Broker. The details of the user and organisation are included in an OAuth Bearer Token carried in HTTP headers.
 
 #### Endpoint Authentication ####
 No client authentication is required, and systems are not required to use a client certificate when connecting to the service. Clients must install the root and intermediary Certificate Authorities used by the service, and must validate the server certificate used by the service, ensuring that it matches the hostname of the service. Systems should be registered Spine endpoints in order to provide their ASID in the request header.

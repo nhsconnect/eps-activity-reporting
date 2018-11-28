@@ -1,7 +1,7 @@
 entries:
-- title: Prescription Exemption Checking Service
-  product: Prescription Exemption Checking Service API<br/>
-  version: v1.0.0
+- title: Pharmacy Activity Reporting API
+  product: Pharmacy Activity Reporting API<br/>
+  version: v0.0.1
   levels: one
   folders:
 
