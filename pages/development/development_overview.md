@@ -4,39 +4,38 @@ keywords: development guide api
 tags: [development]
 sidebar: overview_sidebar
 permalink: development_overview.html
-summary: "Overview for developers on how to integrate with the Prescription Exemption Checking Service"
+summary: "Overview for developers on how to integrate with the Service"
 ---
 
-## Development Overview ##
+## API Design Approach ##
 
+All requests use RESTful style in creating or reading Claim resources. FHIR has been used to model resources but the API does not claim conformance to the FHIR standard or existing NHS profiles. Claim resources necessarily include information on patients, immunizations, practitioners and organizations and these are included as their respective FHIR resources. As these are not managed as separate entities outside of a Claim these are only included as contained resources within the Claim resource.
 
-### Requests ###
-All requests are HTTP POSTs of a json object with the following properties:
+### FHIR Resources used as a base ###
 
-| Property		|	Description															|	Data type		| Example												|		
-+-------------+-----------------------------------------+-------------+-------------------------------|
-|	`dob`				|	**Date of Birth** of the patient				|	Date				| 2010-01-01										|
-|	`nhsNumber`	| **NHS Number** which must be traced and verified with Spine Demographics | String	| 9434765919 |
-|	`postcode`	|	**Post Code** of patient's usual address	|	String			|	NE32JH													|
-|	`surname`|	**Family Name** from patient's usual name	|	String			|	Parker													|
-|`prescriptionId` | EPS R2 **Prescription ID** from the prescription | String | 471BC8-P83027-34B75X
+The API uses profiled versions of FHIR and CareConnect resources.
 
-### Response ###
-The json response will contain a simple object with the following properties. Note that these properties are not ordered so may appear in any order.
+| FHIR Resource                | Activity Reporting Profile                                         |
+| ---------------------------- | ------------------------------------------------------------------ |
+| [Bundle](https://www.hl7.org/fhir/bundle.html)| [PharmacyConnect-DM-SearchsetBundle-1](https://simplifier.net/pharmacyactivityreporting/pharmacyconnect-dm-searchsetbundle-1)
+| [Claim](https://www.hl7.org/fhir/claim.html)  | [PharmacyConnect-DM-FluVaccinationClaim-1](https://simplifier.net/pharmacyactivityreporting/pharmacyconnect-dm-fluvaccinationclaim-1)
+| [Immunization](https://www.hl7.org/fhir/immunization.html)| [PharmacyConnect-DM-Immunization-1](https://simplifier.net/pharmacyactivityreporting/pharamacyconnect-dm-immunization-1)
+| [Patient](https://www.hl7.org/fhir/patient.html) | [PharmacyConnect-DM-Patient-1](https://simplifier.net/pharmacyactivityreporting/pharmacyconnect-dm-patient-1)
+| [Practitioner](https://www.hl7.org/fhir/practitioner.html) | [PharmacyConnect-DM-Practitioner-1](https://simplifier.net/pharmacyactivityreporting/pharmacyconnect-dmc-practitioner-1)
+| [Organization](https://www.hl7.org/fhir/organization.html) | [PharmacyConnect-DM-Organization-1](https://simplifier.net/pharmacyactivityreporting/pharmacyconnect-dm-organization-1)
+| [OperationOutcome](https://www.hl7.org/fhir/operationoutcome.html)| [PharmacyConnect-DM-OperationOutcome-1](https://simplifier.net/pharmacyactivityreporting/pharmacyconnect-dm-operationoutcome-1)
 
-| Property	|	Description															|	Data type					| Example													|		
-+-----------+-----------------------------------------+-------------------+---------------------------------|
-|	`message`	| **Exemption description or error** which can be displayed to the user		| String	| `Exemption has been found` |
-|	`type`		|	**Exemption type** which should be returned in the reimbursement claim for EPS R2 prescriptions	|	String	|	`9005`	|
+### Resource Serialization ###
 
+The FHIR framework supports both XML and json serializations interchangeably. This release of the API supports only JSON.
 
 ### Error Handling ###
-The Prescription Exemption Checking Service API uses standard HTTP response codes with further details where available provided in the `message` property.
+The API uses standard HTTP response codes with further details included in an OperationOutcome resource.
 
 ### Security ###
 
 #### User Authentication & Authorization ####
-Systems are required to be implement Role-Based Access Control using the Spine Security Broker. The details of the user and organisation are included in an OAuth Bearer Token carried in HTTP headers.
+Client systems are required to implement Role-Based Access Control using the Spine Security Broker. The details of the user and organisation are included in an OAuth Bearer Token carried in HTTP headers. The API is not expected to carry out any validation of user identity.
 
-#### Endpoint Authentication ####
-No client authentication is required, and systems are not required to use a client certificate when connecting to the service. Clients must install the root and intermediary Certificate Authorities used by the service, and must validate the server certificate used by the service, ensuring that it matches the hostname of the service. Systems should be registered Spine endpoints in order to provide their ASID in the request header.
+#### Client Endpoint Authentication ####
+No client authentication is required, and systems are not required to use a client certificate when connecting to the service. Clients must install the root and intermediary Certificate Authorities used by the service, and must validate the server certificate used by the service, ensuring that it matches the hostname of the service.

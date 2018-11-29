@@ -1,7 +1,7 @@
 entries:
-- title: Prescription Exemption Checking Service
-  product: Prescription Exemption Checking Service API<br/>
-  version: v1.0.0
+- title: Pharmacy Activity Reporting API
+  product: Pharmacy Activity Reporting API<br/>
+  version: v0.0.1
   levels: one
   folders:
 
@@ -10,7 +10,7 @@ entries:
     folderitems:
     - title: Introduction
       url: /index.html
-      output: web, pdf
+      output: web
       type: homepage
 
   - title: Develop
@@ -22,20 +22,23 @@ entries:
     - title: User Authentication & Authorization
       url: /user_auth.html
       output: web
+    - title: Create a Claim
+      url: /development_create_claim.html
+      output: web
+    - title: View a Claim
+      url: /development_view_claim.html
+      output: web
+    - title: Search Claims
+      url: /development_search_claims.html
+      output: web
     - title: Cross organisation audit and provenance
       url: /cross_organisation_audit_and_provenance.html
-      output: web
-    - title: System Authentication
-      url: /system_auth.html
       output: web
     - title: Errors
       url: /errors.html
       output: web
     - title: API Operations Reference
       url: /api_operations_reference.html
-      output: web
-    - title: Integrating EPS Messaging
-      url: /integrating_messaging.html
       output: web
   - title: Test
     output: web
